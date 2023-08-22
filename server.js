@@ -16,8 +16,6 @@ const DB = process.env.DATABASE.replace(
   process.env.DATABASE_PASSWORD
 );
 
-const port = process.env.PORT || 3000;
-let server;
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -25,10 +23,12 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true
   })
-  .then(() => {
-    server = app.listen(port);
-    console.log(`DB connected and App running on port ${port}...`);
-  });
+  .then(() => console.log('DB connection successful!'));
+
+const port = process.env.PORT;
+const server = app.listen(port, () => {
+  console.log(`App running on port ${port}...`);
+});
 
 process.on('unhandledRejection', err => {
   console.log('UNHANDLED REJECTION! 💥 Shutting down...');
